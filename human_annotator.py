@@ -4,8 +4,12 @@ import os, shutil
 
 height = 300
 width = 225
-seek_str = "jpeg"
+seek_str = "png"
 
+# #### Button
+# img_files = []  # files to annotate  ['unt-1.jpeg', 'unt-2.jpeg']
+# status_label = Label(frame_status, fg='black')         # show status label
+# status_label.grid(row=0, column=0)
 
 #### Tkinter Initialization/Started text and attributes
 root = Tk()
@@ -18,19 +22,19 @@ frame_status = Frame(root)
 frame_radio.grid(row=2, column=3, columnspan=1,)               # Frame Location in ROOT
 frame_status.grid(row=4,column=3, columnspan=1,)               # Frame Location in ROOT
 
+#### Button
+img_files = []  # files to annotate  ['unt-1.jpeg', 'unt-2.jpeg']
+status_label = Label(frame_status, fg='black')         # show status label
+status_label.grid(row=0, column=0)
 
 #### Text Label
 myLabel  = Label(root,  text="Please Enter Folder Address ", fg="red").grid(row=0,column=0)    # label widget height=300, width=225
 
 #### Text Entry
 e = Entry(root, width=40, borderwidth=5,)
-e.insert(0,"/Users/bashit.a/Documents/EECE7370/project/images")                                 # 0 because there is only on e box 
+e.insert(0,"C:/Users/ahmet/Desktop/EECE7370/Project/cifar_dataset_AL_temp/generated_images")                                 # 0 because there is only on e box 
 e.grid(row=0,column=1, columnspan=2, padx=10, pady=10)
 
-#### Button
-img_files = []  # files to annotate  ['unt-1.jpeg', 'unt-2.jpeg']
-status_label = Label(frame_status, fg='black')         # show status label
-status_label.grid(row=0, column=0)
 
 def myClick():
     global folder, img_files, img_objs , status_label
@@ -83,14 +87,14 @@ class image_show:
             self.my_img_label.grid(row=0,column=0,columnspan=3,)                         # display in grid
             
             self.button_back    = Button(self.frame_tool, text="<<", fg='black', state=DISABLED) if self.img_idx ==0 \
-                             else Button(self.frame_tool, text="<<", fg='black', command=lambda: self.back(self.img_idx-1));         
+                              else Button(self.frame_tool, text="<<", fg='black', command=lambda: self.back(self.img_idx-1));         
             self.button_back.grid(row=0,column=0,columnspan=1,)
             self.button_forward = Button(self.frame_tool, text=">>", fg='black', command=lambda: self.forward(self.img_idx+1));      
             self.button_forward.grid(row=0,column=2,columnspan=1,)   # calling forward function
         
         else:
             pass
-            self.my_img = Image.open("Linux.ico")                               # open image
+            self.my_img = Image.open("temp.png")                               # open image
             self.my_img = self.my_img.resize((self.height, self.width), Image.ANTIALIAS)       # resize image
             self.my_img = ImageTk.PhotoImage(self.my_img)                      
             self.my_img_label = Label(self.frame_im, image=self.my_img)   # WILL NOT WORK without self --> ImageTk.PhotoImage(Image.open("Linux.ico")) or ImageTk.PhotoImage(file="Linux.ico")
@@ -98,10 +102,10 @@ class image_show:
             self.button_back    = Button(self.frame_tool, text="<<", fg='black', state=DISABLED).grid(row=0,column=0,columnspan=1,)
             self.button_forward = Button(self.frame_tool, text=">>", fg='black', state=DISABLED).grid(row=0,column=2,columnspan=1,) 
 
-        Button(self.frame_tool, text="Exit Program", fg='black', command=self.master.quit).grid(row=0,column=1,columnspan=1,)                   # one line Exit Button
+        Button(self.frame_tool, text="Exit Program", fg='black', command=self.master.destroy).grid(row=0,column=1,columnspan=1,)                   # one line Exit Button
 
     def back(self, img_num):
-        """ img_num can't go negetive """
+        """ img_num can't go negative """
 
         ### Same as forward
         #global img_idx, my_img_label, button_back, button_forward               # manipulation of these variable will be used globally
@@ -184,3 +188,4 @@ def annotation():
 
 #### Tkinter eventloop (Mandatory at the bottom)    
 root.mainloop()                                               # tkinter mainloop
+
